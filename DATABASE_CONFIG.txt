@@ -1,0 +1,9 @@
+CREATE DATABASE cycler;
+USE cycler;
+CREATE TABLE links(id int NOT NULL AUTO_INCREMENT, link TEXT, delay int, PRIMARY KEY (id));
+CREATE TABLE adminpassword(password varchar(255));
+CREATE USER site IDENTIFIED BY "site";
+UPDATE mysql.user SET password=PASSWORD('YOURPASSWORD') WHERE User='site';
+GRANT SELECT, INSERT, UPDATE, DELETE, ALTER ON cycler.links TO site;
+GRANT SELECT, INSERT ON cycler.adminpassword TO site;
+FLUSH PRIVILEGES;
