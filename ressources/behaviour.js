@@ -1,54 +1,110 @@
-function buffer_src(src)
+//pauses the cycling
+function pause()
 {
-	var buffer = document.createElement('iframe');
-	buffer.setAttribute("id", "buffer");
-	buffer.src = src;
-	buffer.name = src;
-	document.body.appendChild(buffer);
-	setTimeout(function() { push_buffer(); }, 5000);
+	meta["paused"] = true
 }
 
-function push_buffer()
+//resume the cycling
+function play()
+{
+	meta["paused"] = false
+}
+
+//accelerate the elapsed time. Goes up to x1000
+function accelerate()
+{
+	meta["elapsedIncrement"] = Math.min(meta["elapsedIncrement"]*2, 1024*1024)
+}
+
+//decelerate the elapsed time. Goes up to /1000
+function decelerate()
+{
+	meta["elapsedIncrement"] = Math.max(meta["elapsedIncrement"]/2, 1)
+}
+
+//push an iframe to front.
+function swap(id)
 {
 	front = document.getElementById("front");
-	buffer = document.getElementById("buffer");
-	front.style.WebkitAnimationName = "out";
-	buffer.style.WebkitAnimationName = "in";
-	setTimeout(function() { swap(); }, 2000);
+	if(front)
+	{
+		front.setAttribute("id", meta["current"]); // set back
+	}
+	buffer = document.getElementById(id);
+	if(buffer)
+	{
+		buffer.setAttribute("id", "front"); //placed to front
+	}
+	meta["elapsed"] = 0 // and elapsed time is now zero cause we switched the iframe.
+	meta["current"] = id
 }
 
-function swap()
+//calculates the id of the next frame.
+function increment()
 {
-	front = document.getElementById("front");
-	buffer = document.getElementById("buffer");
-	buffer.setAttribute("id", "front");
-	front.parentNode.removeChild(front);
+	return meta["current"]+1>=meta["size"] ? 0 : meta["current"] + 1
 }
 
-function loadXMLDocAutoUpdate()
+//gets the id of the previous frame
+function decrement()
 {
-	var xmlhttp;
-	if (window.XMLHttpRequest)
-	{
-	    xmlhttp=new XMLHttpRequest();
-	}
-	else
-	{
-	    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-	}
-	xmlhttp.onreadystatechange=function()
-	{
-	    if (xmlhttp.readyState==4 && xmlhttp.status==200)
-	    {
-	    	front = document.getElementById("front");
-			if(xmlhttp.responseText != front.name)
-			{
-				buffer_src(xmlhttp.responseText);
-			}
-	    }
-	}
-	xmlhttp.open("GET","subpages/behaviour.php",true);
-	xmlhttp.send();
+	return meta["current"]-1<0 ? meta["size"]-1 : meta["current"] -1
 }
 
-setInterval(loadXMLDocAutoUpdate,15000);
+//switch the frame to next
+function next()
+{
+	swap(increment())
+}
+
+//switch the frame to previous
+function previous()
+{
+	swap(decrement())
+}
+
+//accessor for the intervals
+function getCurrentInterval()
+{
+	return intervals[meta["current"]] 
+}
+
+//setter for the intervals
+function appendFrameInterval(interval)
+{
+	intervals[meta["size"]] = interval
+}
+
+//creates a new iframe.
+function appendIframe(src)
+{
+	var iframe = document.createElement('iframe');
+	iframe.setAttribute("id", meta["size"]);
+	iframe.src = src;
+	document.body.appendChild(iframe);
+}
+
+//append a new iframe.
+function append(src, interval)
+{
+	appendFrameInterval(interval) // adding the interval
+	appendIframe(src) // and adding the actual link as a buffer.
+	meta["size"]++ // there's one more iframe
+}
+
+// A clock function - allows the time to be stopped, or sped up.
+function clock()
+{
+	if(!meta["paused"])
+	{
+		while(getCurrentInterval()<=meta["elapsed"]/1024) // skips pages with 0 s.
+		{
+			next();
+		}
+		meta["elapsed"]+=meta["elapsedIncrement"]
+	}
+}
+
+var meta = {paused:false, current:0, size:0, elapsed:0, elapsedIncrement:1024}; //meta values of the page. I tolerate access to meta from anywhere.
+var intervals = [] // the intervals per id, cause thats the only thing we need apart from meta. Set/access from a function.
+setInterval(clock,1000); // launches the descisionnal clock (it decides wether it should call next() or not.)
