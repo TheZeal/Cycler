@@ -64,7 +64,7 @@ function append_link()
 	wrapper.appendChild(input);
 	button = document.createElement("button");
 	button.setAttribute("id", "remove_"+id);
-	button.setAttribute("class", "removebutton");
+	button.setAttribute("class", "remove");
 	button.innerHTML = "delete";
 	wrapper.appendChild(button);
 	wrapper.appendChild(document.createElement("br"));
@@ -90,7 +90,7 @@ function post_changes()
 {
 	form = document.createElement("form");
 	form.setAttribute("method", "post");
-	form.setAttribute("action", window.location.href.replace("&validate=1", "").replace("&reset=1", "").replace("&deleteall=1", "") +"&validate=1");
+	form.setAttribute("action", window.location.href.replace("?validate=1", "").replace("?reset=1", "").replace("?deleteall=1", "") +"?validate=1");
 	id = 1;
 	while(document.getElementById("page_" + id))
 	{

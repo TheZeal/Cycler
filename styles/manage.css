@@ -1,0 +1,224 @@
+/*
+* === Body and Heading===
+*/
+
+body
+{
+    background-color: lightgrey;
+}
+
+h1
+{
+	text-align: center;
+}
+
+h3
+{
+	text-align: center;
+}
+
+/*
+* === Textarea ===
+*/
+
+textarea
+{
+	resize:vertical;
+	margin: 2px;
+	font-size: 16px;
+	border: 1px solid black;
+}
+
+textarea:focus {
+    outline:none;
+    -webkit-animation: on_select 2s infinite;
+}
+
+@-webkit-keyframes on_select {
+    0% {border-color: black;}
+    50% {border-color: lightgrey;}
+    100% {border-color: black;}
+}
+
+/*
+* === Div ===
+*/
+
+div.justified
+{
+	display: -webkit-flex;
+    -webkit-justify-content: center;
+}
+
+@-webkit-keyframes on_create {
+    from {height: 0px;}
+    to {height: 29px;}
+}
+
+@-webkit-keyframes on_delete {
+    from {height: 29px;}
+    to  {height: 0px;}
+}
+
+div.link_container
+{
+	display: -webkit-flex;
+    -webkit-justify-content: center;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-fill-mode: forwards;
+    overflow: hidden;
+}
+
+div.link_wrapper
+{
+	display: -webkit-flex;
+    -webkit-justify-content: center;
+}
+
+/*
+* === Input and buttons ===
+*/
+
+input
+{
+   	font-size: 16px;   
+   	text-align: center;
+   	border: 1px solid black;
+}
+input:focus {
+    outline:none;
+    -webkit-animation: on_select 2s infinite;
+}
+
+input[type=text]
+{
+	width: 100px;
+	margin: 2px;
+}
+
+button
+{
+	overflow: hidden;
+	margin: 2px;
+}
+
+/*
+* -- Red buttons or inputs --
+*/
+
+button.remove
+{
+	-webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+	background-color: white;
+	border: 1px solid red;
+	font-size: 16px;
+}
+
+button.remove:hover
+{
+    background-color: red;
+}
+
+button.logoff
+{
+	-webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+	background-color: white;
+	border: 1px solid red;
+	font-size: 16px;
+}
+
+button.logoff:hover
+{
+	background-color: red;
+}
+
+#reset
+{
+	-webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+	background-color: white;
+	border: 1px solid red;
+	font-size: 16px;
+}
+
+#reset:hover
+{
+    background-color: red;
+}
+
+#deleteall
+{
+	-webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+	background-color: white;
+	border: 1px solid red;
+	font-size: 16px;
+}
+
+#deleteall:hover
+{
+	background-color: red;
+}
+
+/*
+* -- Green buttons or inputs--
+*/
+
+button.add
+{
+	-webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+	background-color: white;
+	border: 1px solid #4CAF50;
+	font-size: 16px;
+}
+
+button.add:hover
+{
+    background-color: #4CAF50;
+}
+
+button.submit
+{
+	-webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+	background-color: white;
+	border: 1px solid #4CAF50;
+	font-size: 16px;
+}
+
+button.submit:hover
+{
+	background-color: #4CAF50;
+}
+
+button.login
+{
+	-webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+	background-color: white;
+	border: 1px solid #4CAF50;
+	font-size: 16px;
+}
+
+button.login:hover
+{
+	background-color: #4CAF50;
+}
+
+button.createpassword
+{
+	-webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+	background-color: white;
+	border: 1px solid #4CAF50;
+	font-size: 16px;
+}
+
+button.createpassword:hover
+{
+	background-color: #4CAF50;
+}
+
